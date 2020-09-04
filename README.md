@@ -1,9 +1,8 @@
-# Compta
+# :classical_building: Accounting 
 
-Aim is to propose a simple algorithm that read, parse, store, process and display financial data.
+Aim is to propose a simple algorithm that read, parse, store, process and display financial data for individuals :money_with_wings:.
 
-
-Todo: 
+## :moneybag: Todo
 implémenter une carte des dépences sur un agenda comme github
 compter :
 	- les transactions 
