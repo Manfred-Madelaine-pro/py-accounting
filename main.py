@@ -2,7 +2,7 @@ import read_file as rf
 import process_data as pcs
 
 TODO_list = '''
-    x pick latest file as default 
+    o pick latest file as default 
 
     o read file
     
@@ -34,6 +34,7 @@ if __name__ == '__main__':
        mp = pcs.Monthly_payments(month, payments)
        print(mp)
        mps[mp.date] = mp
+
 
     [print (p[:-1]) for p in mps['07/2020'].payments[::-1]]
 

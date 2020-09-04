@@ -13,15 +13,20 @@ ALL_FILES = '*'
 
 
 def get_file_path(directory):
+    # get latest file in directory
     list_of_files = glob.glob(directory + ALL_FILES)
     latest_file = max(list_of_files, key=os.path.getctime)
     return latest_file
 
 
 def read_file(file_path):
+    def filter_unrelevant(row):
+        # True if first character of the row is unexpected 
+        return '=' != row[0][0]
+
     with open(file_path, mode='r') as infile:
         reader = csv.reader(infile)
-        return [parse(row) for row in reader]
+        return [parse(row) for row in reader if filter_unrelevant(row)]
 
 
 def parse(row):
