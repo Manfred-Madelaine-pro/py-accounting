@@ -4,7 +4,7 @@ import process_data as pcs
 TODO_list = '''
     x pick latest file as default 
 
-    x read file
+    o read file
     
     o parse data 
     
@@ -18,7 +18,8 @@ TODO_list = '''
 
 
 if __name__ == '__main__':
-    file_path = 'data/Export_00050541037_29022020_28082020.csv'
+    data_dir = 'data/'
+    file_path = rf.get_file_path(data_dir)
     parsed_data = rf.read_file(file_path)
 
     payments_per_month = {}

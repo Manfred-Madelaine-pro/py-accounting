@@ -1,4 +1,6 @@
+import os
 import csv
+import glob
 
 
 TODO_list = '''
@@ -6,6 +8,15 @@ TODO_list = '''
     retreive all data
     and map it to a dictionary
 '''
+
+ALL_FILES = '*'
+
+
+def get_file_path(directory):
+    list_of_files = glob.glob(directory + ALL_FILES)
+    latest_file = max(list_of_files, key=os.path.getctime)
+    return latest_file
+
 
 def read_file(file_path):
     with open(file_path, mode='r') as infile:
@@ -37,5 +48,9 @@ def safe_cast(val, to_type, default=None):
 
 
 if __name__ == '__main__':
-    file_path = 'data/Export_00050541037_07022020_06082020.csv'
+    dir = 'data/'
+    file_path = dir + 'Export_00050541037_07022020_06082020.csv'
     read_file(file_path)
+
+    res = get_file_path(dir)
+    print(res)
