@@ -2,15 +2,17 @@ import read_file as rf
 import process_data as pcs
 
 TODO_list = '''
-    read file
-    
-    parse data 
-    
-    store data 
+    x pick latest file as default 
 
-    process data
+    x read file
+    
+    o parse data 
+    
+    x store data 
 
-    visualize data
+    o process data
+
+    x visualize data
 '''
 
 
