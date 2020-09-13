@@ -39,17 +39,31 @@ def get_payments_per_month(parsed_data):
 def get_all_monthly_payments(payments_per_month):
     mps = {}
     for month, payments in payments_per_month.items():
-       mp = process.Monthly_payments(month, payments)
-       mps[mp.date] = mp
+        mp = process.Monthly_payments(month, payments)
+        mps[mp.date] = mp
     return mps
+
+
+def enrich_monthly_payments(mps):
+    count = {}
+    for month, mp in mps.items():
+        for p in mp.payments:
+            count[p[LABEL_ID]] = count.get(p[LABEL_ID], 0) + 1
+
+    # [print(c, l) for l,c in count.items() if c > 1]
+
+    for month, mp in mps.items():
+        for p in mp.payments:
+            if count.get(p[LABEL_ID], 0) > 1:
+                mp.add_fix_payment(p[LABEL_ID], p[AMOUNT_ID])
 
 
 def display(mps):
     [print (p[:-1]) for p in mps['07/2020'].payments[::-1]]
 
-    payment_carte = [p[2] for p in mps['07/2020'].payments[::-1] if 'ARTE X9372' in p[1]]
+    payment_carte = [p[AMOUNT_ID] for p in mps['07/2020'].payments[::-1] if 'ARTE X9372' in p[LABEL_ID]]
 
-    [print(p[:-1]) for p in mps['07/2020'].payments[::-1] if 'ARTE X9372' in p[1]]
+    [print(p[:-1]) for p in mps['07/2020'].payments[::-1] if 'ARTE X9372' in p[LABEL_ID]]
     print(sum(payment_carte))
     
 
@@ -61,6 +75,8 @@ if __name__ == '__main__':
     payments_per_month = get_payments_per_month(parsed_data)
    
     mps = get_all_monthly_payments(payments_per_month)
+
+    enrich_monthly_payments(mps)
 
     [print(mp) for mp in mps.values()]
     # display(mps)

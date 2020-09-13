@@ -37,6 +37,16 @@ class Monthly_payments:
 
         self.cash = self.total_debit + self.total_credit
 
+    # Move everything to DB !! create tables and views that are created on the fly
+    def add_fix_payment(self, label, amount):
+        if amount > 0 : 
+            self.fixed_credits += [amount]
+            self.total_fixed_credits = sum(self.fixed_credits)
+        else :
+            self.fixed_debits += [amount]
+            self.total_fixed_debits = sum(self.fixed_debits)
+
+
 
     def __repr__(self):
         fa = lambda a: f'{a:,.2f} EUR'
@@ -45,8 +55,10 @@ class Monthly_payments:
         txt += f'{self.date} :'
         txt += '\n'
         txt += f"\tTotal credit : {fa(self.total_credit)} \t (Max : {fa(self.max_credit)})"
+        txt += f"\t (Fixed : {fa(self.total_fixed_credits)})" if self.total_fixed_credits else ''
         txt += '\n'
         txt += f"\tTotal dedit : {fa(self.total_debit)} \t (Min : {fa(self.min_debit)})"
+        txt += f"\t (Fixed : {fa(self.total_fixed_debits)})" if self.total_fixed_debits else ''
         txt += '\n'
         txt += f'\tCash : {fa(self.cash)}'
         return txt
