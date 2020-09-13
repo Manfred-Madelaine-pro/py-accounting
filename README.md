@@ -8,3 +8,7 @@ compter :
 	- les transactions 
 	- les débits
 	- les crédits
+
+## :rocket: Example 
+
+![running main script](img/main.PNG)
