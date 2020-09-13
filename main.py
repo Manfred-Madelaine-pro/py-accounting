@@ -15,18 +15,23 @@ TODO_list = '''
 
     x digest data
 
+    x extract recurrent posts
+
     x visualize data
 '''
 
 
 DATA_DIR = 'data/'
 
+DATE_ID = 0
+LABEL_ID = 1
+AMOUNT_ID = 2
 
 
 def get_payments_per_month(parsed_data):
     payments_per_month = {}
     for r in parsed_data[1:]:
-        key = '/'.join(r[0].split('/')[1:])
+        key = '/'.join(r[DATE_ID].split('/')[1:])
         payments_per_month[key] = payments_per_month.get(key, []) + [r]
     return payments_per_month
 
