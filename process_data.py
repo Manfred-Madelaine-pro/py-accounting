@@ -1,22 +1,33 @@
 
 
+LABEL_ID = 1
+AMOUNT_ID = 2
+
+
 class Monthly_payments:
     def __init__(self, date, payments):
         self.date = date
         self.payments = payments
 
+        self.debits = []
+        self.credits = []
+        self.total_credit = 0
+        self.total_debit = 0
+
+        self.fixed_debits = []
+        self.fixed_credits = []
+        self.total_fixed_credits = 0
+        self.total_fixed_debits = 0
+
         self.process_payments()
 
 
     def process_payments(self):
-        self.debits = []
-        self.credits = []
-
         for p in self.payments:
-            if p[2] < 0:
-                self.debits += [p[2]]
+            if p[AMOUNT_ID] < 0:
+                self.debits += [p[AMOUNT_ID]]
             else:
-                self.credits += [p[2]]
+                self.credits += [p[AMOUNT_ID]]
 
         self.total_credit = sum(self.credits)
         self.max_credit = max(self.credits)
