@@ -60,3 +60,10 @@ First expected release the friday **15th december 2020**
 	  
 1. Front
 	- [ ] Consumption map on a calendar just like github contribution calendar
+
+
+## :joystick: More examples
+
+### :floppy_disk: Database example 
+
+![Database example](img/database_example.png)

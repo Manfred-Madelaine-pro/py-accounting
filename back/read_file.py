@@ -53,7 +53,7 @@ def safe_cast(val, to_type, default=None):
 
 
 if __name__ == '__main__':
-    dir = 'data/'
+    dir = '../data/'
     file_path = dir + 'Export_00050541037_07022020_06082020.csv'
     read_file(file_path)
 

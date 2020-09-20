@@ -1,6 +1,4 @@
-import read_file as rf
-import process_data as process
-
+from back import process_data as process, read_file as rf
 
 TODO_list = '''
     o pick latest file as default 
