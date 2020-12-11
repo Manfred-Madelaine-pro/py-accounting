@@ -1,8 +1,6 @@
-import read_file as rf
-import process_data as process
+from back import process_data as process, integrator as rf
 
-
-TODO_list = '''
+TODO_list = """
     o pick latest file as default 
 
     o read file
@@ -18,10 +16,10 @@ TODO_list = '''
     x extract recurrent posts
 
     x visualize data
-'''
+"""
 
 
-DATA_DIR = 'data/'
+DATA_DIR = "data/"
 
 DATE_ID = 0
 LABEL_ID = 1
@@ -31,7 +29,7 @@ AMOUNT_ID = 2
 def get_payments_per_month(parsed_data):
     payments_per_month = {}
     for r in parsed_data[1:]:
-        key = '/'.join(r[DATE_ID].split('/')[1:])
+        key = "/".join(r[DATE_ID].split("/")[1:])
         payments_per_month[key] = payments_per_month.get(key, []) + [r]
     return payments_per_month
 
@@ -59,21 +57,29 @@ def enrich_monthly_payments(mps):
 
 
 def display(mps):
-    [print (p[:-1]) for p in mps['07/2020'].payments[::-1]]
+    [print(p[:-1]) for p in mps["07/2020"].payments[::-1]]
 
-    payment_carte = [p[AMOUNT_ID] for p in mps['07/2020'].payments[::-1] if 'ARTE X9372' in p[LABEL_ID]]
+    payment_carte = [
+        p[AMOUNT_ID]
+        for p in mps["07/2020"].payments[::-1]
+        if "ARTE X9372" in p[LABEL_ID]
+    ]
 
-    [print(p[:-1]) for p in mps['07/2020'].payments[::-1] if 'ARTE X9372' in p[LABEL_ID]]
+    [
+        print(p[:-1])
+        for p in mps["07/2020"].payments[::-1]
+        if "ARTE X9372" in p[LABEL_ID]
+    ]
     print(sum(payment_carte))
-    
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     file_path = rf.get_file_path(DATA_DIR)
 
     parsed_data = rf.read_file(file_path)
 
     payments_per_month = get_payments_per_month(parsed_data)
-   
+
     mps = get_all_monthly_payments(payments_per_month)
 
     enrich_monthly_payments(mps)

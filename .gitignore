@@ -1,4 +1,7 @@
-data/
-__pycache__/
-
 .idea/
+
+__pycache__/
+venv/
+
+data/
+database/
