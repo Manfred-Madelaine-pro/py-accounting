@@ -76,7 +76,7 @@ def test_database_creation():
         ("1", "02/12/2020", "200", "D", "tst 2"),
         ("1", "02/12/2020", "20", "C", "tst 2"),
         ("1", "20/12/2020", "100", "C", "tst 2"),
-        ("1", "20/12/2020", "100", "C", "tst 2"), # Duplication
+        ("1", "20/12/2020", "100", "C", "tst 2"),  # Duplication
     ]
 
     insert_payments_rows(con, payments)
