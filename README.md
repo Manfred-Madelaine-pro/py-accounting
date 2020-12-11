@@ -39,7 +39,7 @@ First expected release the friday **15th december 2020**
 ## :clipboard: Tasks
 
 1. Database
-	- [ ] Create schema
+	- [x] Create schema
 	
 1. Payments
 	- [ ] Create account

@@ -65,7 +65,7 @@ def print_table2(con, table_name):
 
 def test_database_creation():
     con = get_connection(":memory:")
-    # con = get_connection("database/events.db")
+    # con = get_connection("database/accounting.db")
     create_payments_table(con)
 
     payments = [
