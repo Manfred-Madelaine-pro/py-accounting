@@ -33,6 +33,7 @@ First expected release the friday **15th december 2020**
 
     ``` bash
     apt install python3-pip
+    pip install PTable
     ```
 
 ## :clipboard: Tasks
