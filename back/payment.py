@@ -1,11 +1,11 @@
-
-
-CREDIT = 'C'
-DEBIT = 'D'
+CREDIT = "C"
+DEBIT = "D"
 
 
 class Payment:
-    def __init__(self, id, account_id, value_date, amount, direction, details, creation_date):
+    def __init__(
+        self, id, account_id, value_date, amount, direction, details, creation_date
+    ):
         self.id = id
         self.account_id = account_id
         self.value_date = value_date
@@ -15,12 +15,11 @@ class Payment:
         self.creation_date = creation_date
 
     def __str__(self):
-        txt = ''
-        txt += f'({self.value_date}) account #{self.account_id} -> {self.get_signed_amount():>+10,.2f}: {self.details}'
-        return txt
+        return f"({self.value_date}) account #{self.account_id} " \
+               f"-> {self.get_signed_amount():>+10,.2f}: {self.details}"
 
     def get_signed_amount(self):
-        return self.amount if self.direction == CREDIT else - self.amount
+        return self.amount if self.direction == CREDIT else -self.amount
 
 
 # ------------------- Mapper -------------------
@@ -47,6 +46,7 @@ def to_domain(payment):
 
 def test():
     import database as db
+
     DB_NAME = "database/accounting.db"
 
     con = db.get_connection(DB_NAME)

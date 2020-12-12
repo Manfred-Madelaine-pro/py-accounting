@@ -48,6 +48,11 @@ def get_all_payments(con):
     return select_all(con, "payments")
 
 
+def get_all_payments_by_account_id(con, account_id):
+    select_all = f"SELECT * FROM payments WHERE account_id = {account_id};"
+    return con.execute(select_all)
+
+
 # ----------------------- Test ---------------------------
 
 

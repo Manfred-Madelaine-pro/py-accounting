@@ -42,8 +42,9 @@ First expected release the friday **15th december 2020**
 	- [x] Create schema
 	
 1. Payments
-	- [ ] Create account
-	- [ ] Fake few payments
+	- [x] Create account
+	- [x] Fake few payments
+	- [x] Compute few metrics
 	- [ ] Expose data
 	- [ ] Handle labels
 		- [ ] Auto labeling on rules
@@ -56,6 +57,7 @@ First expected release the friday **15th december 2020**
 1. Statistics
 	- [ ] Define profile
 	- [ ] Get monthly stats (max, mix, avg, fix)
+	- [ ] Get period stats (day, week, month, semester, year)
 	- [ ] string similarity calculation to identify recurrent transactions 
 	  
 1. Front
