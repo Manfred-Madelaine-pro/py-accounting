@@ -15,8 +15,10 @@ class Payment:
         self.creation_date = creation_date
 
     def __str__(self):
-        return f"({self.value_date}) account #{self.account_id} " \
-               f"-> {self.get_signed_amount():>+10,.2f}: {self.details}"
+        return (
+            f"({self.value_date}) account #{self.account_id} "
+            f"-> {self.get_signed_amount():>+10,.2f}: {self.details}"
+        )
 
     def get_signed_amount(self):
         return self.amount if self.direction == CREDIT else -self.amount

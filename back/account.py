@@ -1,6 +1,3 @@
-# ------------------- Account -------------------
-
-
 class Account:
     def __init__(self, id, opening=0):
         self.id = id
@@ -8,8 +5,7 @@ class Account:
         self.opening = opening
 
     def __str__(self):
-        txt = f"account #{self.id}"
-        return txt
+        return f"account #{self.id}"
 
     def get_metrics_per_day(self):
         payments_per_day = get_payments_per_day(self.payments)
@@ -21,7 +17,14 @@ class Account:
 
 def get_payments_per_day(payments):
     import itertools
-    return {vd: list(payments_group) for vd, payments_group in itertools.groupby(payments, lambda p: p.value_date)}
+
+    return {
+        vd: list(payments_group)
+        for vd, payments_group in itertools.groupby(payments, lambda p: p.value_date)
+    }
+
+
+# ------------------- Metrics -------------------
 
 
 def get_metrics(date, payments):
@@ -42,9 +45,10 @@ class Metrics:
         self.max_payment = max(amounts)
 
     def __str__(self):
-        txt = f"{self.period} (--{self.debits_count}/++{self.credits_count}): {self.consumption:>+10,.2f}, " \
-              f"(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f})"
-        return txt
+        return (
+            f"{self.period} (--{self.debits_count}/++{self.credits_count}): {self.consumption:>+10,.2f}, "
+            f"(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f})"
+        )
 
 
 # ------------------- Test -------------------
@@ -61,6 +65,7 @@ def get_all_payments(account):
     import payment
 
     payments = payment.map_to_domain(raw_payments)
+
     return sorted(payments, key=lambda p: p.value_date, reverse=True)
 
 
