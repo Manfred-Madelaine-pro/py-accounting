@@ -45,7 +45,10 @@ First expected release the friday **15th december 2020**
 	- [x] Create account
 	- [x] Fake few payments
 	- [x] Compute few metrics
-	- [ ] Expose data
+	  
+1. REST API
+	- [ ] Expose data with GraphQL
+	- [ ] Design API (Postman)
 	- [ ] Handle labels
 		- [ ] Auto labeling on rules
 		- [ ] Endpoint for labeling
