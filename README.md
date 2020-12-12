@@ -34,12 +34,14 @@ First expected release the friday **15th december 2020**
     ``` bash
     apt install python3-pip
     pip install PTable
+    pip install extraction graphene flask-graphql requests
     ```
 
 ## :clipboard: Tasks
 
 1. Database
 	- [x] Create schema
+	- [ ] Try to use some DB framework
 	
 1. Payments
 	- [x] Create account
@@ -47,8 +49,9 @@ First expected release the friday **15th december 2020**
 	- [x] Compute few metrics
 	  
 1. REST API
-	- [ ] Expose data with GraphQL
+	- [x] Expose data with GraphQL
 	- [ ] Design API (Postman)
+	- [ ] Insert payments ?
 	- [ ] Handle labels
 		- [ ] Auto labeling on rules
 		- [ ] Endpoint for labeling

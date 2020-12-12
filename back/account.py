@@ -1,6 +1,7 @@
 class Account:
     def __init__(self, id, opening=0):
         self.id = id
+        self.name = "My name is Test"
         self.payments = []
         self.opening = opening
 
@@ -22,6 +23,12 @@ def get_payments_per_day(payments):
         vd: list(payments_group)
         for vd, payments_group in itertools.groupby(payments, lambda p: p.value_date)
     }
+
+
+def get_account(id):
+    account = Account(id)
+    account.payments = get_all_payments(account)
+    return account
 
 
 # ------------------- Metrics -------------------
