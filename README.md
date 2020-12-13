@@ -81,8 +81,9 @@ First expected release the friday **15th december 2020**
 	  - [x] Get all files in directory
 	  - [x] read each file, one after the other
 	  - [x] Parser rows and map to RawPayments
-	- [ ] Save in database
-		- [ ] If file is duplicate => skip
+	- [x] Save in database
+		- [x] Generic object's management in database
+		- [x] If file is duplicate => skip
 	- [ ] View all payments and duplications between files (count same lines in file and across files)
 	- [ ] CSV from N26
 

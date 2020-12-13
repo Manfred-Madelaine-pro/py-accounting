@@ -1,11 +1,14 @@
 import csv
 
-# import database
+import database_raw_payment as rpdb
+
+
+DB_NAME = "database/accounting.db"
 
 
 class RawPayment:
     def __init__(
-        self, source, file_name, account_id, value_date, amount, direction, title
+            self, source, file_name, account_id, value_date, amount, direction, title
     ):
         self.source = source
         self.file_name = file_name
@@ -21,23 +24,37 @@ class RawPayment:
             f"{self.source}, {self.account_id}, {self.file_name}"
         )
 
+    def to_tuple(self):
+        return self.value_date, self.amount, self.direction, self.title, self.account_id, self.source, self.file_name
+
 
 # --------------------------- Integrate ---------------------------
 
 
 def integrate(source_name, dir_path):
     files_raw_payments = get_data_from_all_files(source_name, dir_path)
+    save(files_raw_payments)
 
-    for f_name, raw_payments in files_raw_payments.items():
-        print("- Raw Payments in", f_name, ":")
-        [print("", rp) for _, rp in zip(range(10), raw_payments)]
+
+def save(files_raw_payments):
+    con = rpdb.db.get_connection(DB_NAME)
 
     for f_name, raw_payments in files_raw_payments.items():
         # if file already in DB skip
-        # save in db
-        # generalize db => payments / raw_payments (/ metrics ?)
-        # use only rp db package
-        pass
+        if not already_integrated(con, f_name):
+            rows = [rp.to_tuple() for rp in raw_payments]
+            rpdb.insert_payments_rows(con, rows)
+
+    raw_payments = rpdb.select_all_raw_payments(con)
+    con.close()
+
+    rpdb.db.print_table(raw_payments)
+
+
+def already_integrated(con, f_name):
+    sql_results = rpdb.get_distinct_file_name(con)
+    files_integrated = [r["file_name"] for r in sql_results]
+    return f_name in files_integrated
 
 
 def get_data_from_all_files(source_name, dir_path):
@@ -121,7 +138,6 @@ def string_to_float(string):
 def test():
     source_name = "Societe General"
     dir_path = "../data/sg/"
-
     files_raw_payments = get_data_from_all_files(source_name, dir_path)
 
     for f_name, raw_payments in files_raw_payments.items():

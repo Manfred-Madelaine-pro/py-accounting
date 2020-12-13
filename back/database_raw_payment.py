@@ -17,8 +17,7 @@ def create_table(con):
             source TEXT,
             file_name TEXT,
         
-            creation_date text NOT NULL,
-            PRIMARY KEY(account_id, value_date, amount, direction, title)
+            creation_date text NOT NULL
         );
     """
     db.create(con, sql_create_table.replace("TABLE_NAME", TABLE_NAME))
@@ -42,16 +41,20 @@ def select_all_raw_payments(con):
     return db.select_all(con, TABLE_NAME)
 
 
+def get_distinct_file_name(con):
+    select_distinct = f"SELECT DISTINCT file_name FROM {TABLE_NAME};"
+    return con.execute(select_distinct)
+
+
 # ----------------------- Test ---------------------------
 
 
 def test_raw_payment_creation():
     con = db.get_connection(":memory:")
-    # con = get_connection("database/accounting.db")
+    con = db.get_connection("database/accounting.db")
     create_table(con)
 
     account_id = 1
-
     raw_payments = [
         ("2020-12-20", "100", "C", "salary", account_id, "SG", "file.csv"),
         ("2020-12-20", "5", "D", "food", account_id, "SG", "file.csv"),

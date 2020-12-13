@@ -47,7 +47,7 @@ def get_all_payments_by_account_id(con, account_id):
 
 def test_payment_creation():
     con = db.get_connection(":memory:")
-    # con = get_connection("database/accounting.db")
+    # con = db.get_connection("database/accounting.db")
     create_table(con)
 
     account_id = 1
