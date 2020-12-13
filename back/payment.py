@@ -1,25 +1,26 @@
 import json
 
+
 CREDIT = "C"
 DEBIT = "D"
 
 
 class Payment:
     def __init__(
-        self, id, account_id, value_date, amount, direction, details, creation_date
+        self, id, account_id, value_date, amount, direction, title, creation_date
     ):
         self.id = id
         self.account_id = account_id
         self.value_date = value_date
         self.amount = amount
         self.direction = direction
-        self.details = details
+        self.title = title
         self.creation_date = creation_date
 
     def __str__(self):
         return (
             f"({self.value_date}) account #{self.account_id} "
-            f"-> {self.get_signed_amount():>+10,.2f}: {self.details}"
+            f"-> {self.get_signed_amount():>+10,.2f}: {self.title}"
         )
 
     def get_signed_amount(self):
@@ -43,7 +44,7 @@ def to_domain(payment):
         payment["value_date"],
         payment["amount"],
         payment["direction"],
-        payment["details"],
+        payment["title"],
         payment["creation_date"],
     )
 

@@ -4,17 +4,22 @@ import csv
 
 
 class RawPayment:
-    def __init__(self, source, file_name, value_date, amount, direction, title):
+    def __init__(
+        self, source, file_name, account_id, value_date, amount, direction, title
+    ):
         self.source = source
         self.file_name = file_name
+        self.account_id = account_id
         self.value_date = value_date
         self.amount = amount
         self.direction = direction
         self.title = title
 
     def __str__(self):
-        return f"{self.value_date}, {self.amount:>10,.2f}, {self.direction}, {self.title}, " \
-               f"{self.source}, {self.file_name}"
+        return (
+            f"{self.value_date}, {self.amount:>10,.2f}, {self.direction}, {self.title}, "
+            f"{self.source}, {self.account_id}, {self.file_name}"
+        )
 
 
 # --------------------------- Integrate ---------------------------
@@ -24,12 +29,14 @@ def integrate(source_name, dir_path):
     files_raw_payments = get_data_from_all_files(source_name, dir_path)
 
     for f_name, raw_payments in files_raw_payments.items():
-        print('- Raw Payments in', f_name, ':')
-        [print('', rp) for _, rp in zip(range(10), raw_payments)]
+        print("- Raw Payments in", f_name, ":")
+        [print("", rp) for _, rp in zip(range(10), raw_payments)]
 
     for f_name, raw_payments in files_raw_payments.items():
         # if file already in DB skip
         # save in db
+        # generalize db => payments / raw_payments (/ metrics ?)
+        # use only rp db package
         pass
 
 
@@ -57,7 +64,12 @@ def read_file(source_name, f_name, file_path):
 
     with open(file_path, mode="r", encoding="ISO-8859-1") as infile:
         reader = csv.reader(infile)
-        return [to_raw_payment(source_name, f_name, parse(row)) for row in reader if not skipped(row)]
+        account_id = get_account_id(f_name)
+        return [
+            to_raw_payment(source_name, f_name, account_id, parse(row))
+            for row in reader
+            if not skipped(row)
+        ]
 
 
 def parse(row):
@@ -67,15 +79,17 @@ def parse(row):
     return row
 
 
-def to_raw_payment(source_name, f_name, row):
+def to_raw_payment(source_name, f_name, account_id, row):
     title = row[1]
     amount = row[2]
     value_date = row[0]
 
-    direction = ['D', 'C'][amount >= 0]
+    direction = ["D", "C"][amount >= 0]
     amount = abs(amount)
 
-    return RawPayment(source_name, f_name, value_date, amount, direction, title)
+    return RawPayment(
+        source_name, f_name, account_id, value_date, amount, direction, title
+    )
 
 
 # --------------------------- Utils ---------------------------
@@ -83,12 +97,17 @@ def to_raw_payment(source_name, f_name, row):
 
 def get_all_files_path(directory):
     import glob
-    all_files_regex = '*'
+
+    all_files_regex = "*"
     return glob.glob(directory + all_files_regex)
 
 
 def get_file_name(f_path):
-    return f_path.split('/')[-1]
+    return f_path.split("/")[-1]
+
+
+def get_account_id(f_name):
+    return f_name.split("_")[1]
 
 
 def string_to_float(string):
@@ -98,6 +117,7 @@ def string_to_float(string):
 
 # --------------------------- Test ---------------------------
 
+
 def test():
     source_name = "Societe General"
     dir_path = "../data/sg/"
@@ -105,13 +125,11 @@ def test():
     files_raw_payments = get_data_from_all_files(source_name, dir_path)
 
     for f_name, raw_payments in files_raw_payments.items():
-        print('- Raw Payments in', f_name, ':')
-        [print('', rp) for _, rp in zip(range(10), raw_payments)]
+        print("- Raw Payments in", f_name, ":")
+        [print("", rp) for _, rp in zip(range(10), raw_payments)]
 
 
 def test2():
-    # n26_dir_path = "../data/n26/"
-
     source_name = "Societe General"
     dir_path = "../data/sg/"
     integrate(source_name, dir_path)
