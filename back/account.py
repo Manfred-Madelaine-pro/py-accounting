@@ -1,6 +1,10 @@
+import json
+
+
 class Account:
     def __init__(self, id, opening=0):
         self.id = id
+        self.name = "My name is Test"
         self.payments = []
         self.opening = opening
 
@@ -14,6 +18,9 @@ class Account:
             metrics_per_day[date] = get_metrics(date, payments)
         return metrics_per_day
 
+    def to_json(self):
+        return json.dumps(self.__dict__)
+
 
 def get_payments_per_day(payments):
     import itertools
@@ -22,6 +29,17 @@ def get_payments_per_day(payments):
         vd: list(payments_group)
         for vd, payments_group in itertools.groupby(payments, lambda p: p.value_date)
     }
+
+
+def get_account(id):
+    account = Account(id)
+    account.payments = get_all_payments(account)
+    return account
+
+
+def get_account_metrics(id):
+    account = get_account(id)
+    return account.get_metrics_per_day()
 
 
 # ------------------- Metrics -------------------
@@ -34,7 +52,7 @@ def get_metrics(date, payments):
 class Metrics:
     def __init__(self, period, payments):
         self.period = period
-        self.payments = payments
+        # self.payments = payments
 
         self.credits_count = len([1 for p in payments if p.get_signed_amount() >= 0])
         self.debits_count = len(payments) - self.credits_count
@@ -49,6 +67,9 @@ class Metrics:
             f"{self.period} (--{self.debits_count}/++{self.credits_count}): {self.consumption:>+10,.2f}, "
             f"(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f})"
         )
+
+    def to_json(self):
+        return json.dumps(self.__dict__)
 
 
 # ------------------- Test -------------------

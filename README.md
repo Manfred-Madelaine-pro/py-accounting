@@ -34,18 +34,36 @@ First expected release the friday **15th december 2020**
     ``` bash
     apt install python3-pip
     pip install PTable
+    pip install extraction graphene flask-graphql requests
     ```
+
+## :zap: Quick start
+
+To start the backend server, simply run bellow commands:
+	``` bash
+		$ export FLASK_APP=controller.py
+		$ export FLASK_ENV=development
+		$ flask run
+		 * Running on http://127.0.0.1:5000/
+	```
 
 ## :clipboard: Tasks
 
 1. Database
 	- [x] Create schema
+	- [ ] Try to use some DB framework
 	
 1. Payments
 	- [x] Create account
 	- [x] Fake few payments
 	- [x] Compute few metrics
-	- [ ] Expose data
+	  
+1. REST API
+	- [x] Expose data 
+		- [x] Flask
+		- [x] GraphQL ~> not very effective
+	- [x] Design API (Postman ~> not effective)
+	- [ ] Insert payments ?
 	- [ ] Handle labels
 		- [ ] Auto labeling on rules
 		- [ ] Endpoint for labeling
