@@ -73,15 +73,19 @@ def test_database_creation():
     # con = get_connection("database/accounting.db")
     create_payments_table(con)
 
+    account_id = 1
     payments = [
-        ("1", "20/12/2020", "70", "C", "tst 1"),
-        ("1", "20/12/2020", "7", "C", "tst 2"),
-        ("1", "19/12/2020", "10", "D", "tst 3"),
-        ("1", "19/12/2020", "20", "C", "tst 2"),
-        ("1", "02/12/2020", "200", "D", "tst 2"),
-        ("1", "02/12/2020", "20", "C", "tst 2"),
-        ("1", "20/12/2020", "100", "C", "tst 2"),
-        ("1", "20/12/2020", "100", "C", "tst 2"),  # Duplication
+        (account_id, "2020-12-20", "70", "C", "tst 1"),
+        (account_id, "2020-12-20", "7", "C", "tst 2"),
+        (account_id, "2020-12-19", "10", "D", "tst 3"),
+        (account_id, "2020-12-19", "20", "C", "tst 2"),
+        (account_id, "2020-12-02", "200", "D", "tst 2"),
+        (account_id, "2020-12-02", "20", "C", "tst 2"),
+        (account_id, "2020-12-20", "100", "C", "tst 2"),
+        (account_id + 1, "2020-12-20", "50", "C", "tst 1"),
+        (account_id + 1, "2020-12-20", "500", "C", "tst 2"),
+        (account_id + 1, "2020-12-19", "200", "D", "tst 3"),
+        (account_id, "2020-12-20", "100", "C", "tst 2"),  # Duplication
     ]
 
     insert_payments_rows(con, payments)

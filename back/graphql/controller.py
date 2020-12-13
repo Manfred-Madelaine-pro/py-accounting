@@ -16,7 +16,7 @@ class Query(graphene.ObjectType):
         description="Look up an account by ID.",
         id=graphene.Argument(
             graphene.ID, description="ID of the account.", required=True
-        )
+        ),
     )
 
     def resolve_account(self, info, id):

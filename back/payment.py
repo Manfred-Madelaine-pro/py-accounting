@@ -1,3 +1,5 @@
+import json
+
 CREDIT = "C"
 DEBIT = "D"
 
@@ -22,6 +24,9 @@ class Payment:
 
     def get_signed_amount(self):
         return self.amount if self.direction == CREDIT else -self.amount
+
+    def to_json(self):
+        return json.dumps(self.__dict__)
 
 
 # ------------------- Mapper -------------------
