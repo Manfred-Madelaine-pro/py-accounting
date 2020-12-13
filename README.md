@@ -37,6 +37,16 @@ First expected release the friday **15th december 2020**
     pip install extraction graphene flask-graphql requests
     ```
 
+## :zap: Quick start
+
+To start the backend server, simply run bellow commands:
+	``` bash
+		$ export FLASK_APP=controller.py
+		$ export FLASK_ENV=development
+		$ flask run
+		 * Running on http://127.0.0.1:5000/
+	```
+
 ## :clipboard: Tasks
 
 1. Database
@@ -50,6 +60,7 @@ First expected release the friday **15th december 2020**
 	  
 1. REST API
 	- [x] Expose data with GraphQL
+	- [ ] Expose data with bare Flask
 	- [ ] Design API (Postman)
 	- [ ] Insert payments ?
 	- [ ] Handle labels
