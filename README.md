@@ -34,12 +34,14 @@ First expected release the friday **15th december 2020**
     ``` bash
     apt install python3-pip
     pip install PTable
+    pip install Flask
     pip install extraction graphene flask-graphql requests
     ```
 
 ## :zap: Quick start
 
 To start the backend server, simply run bellow commands:
+
 	``` bash
 		$ export FLASK_APP=controller.py
 		$ export FLASK_ENV=development
