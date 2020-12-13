@@ -59,9 +59,10 @@ To start the backend server, simply run bellow commands:
 	- [x] Compute few metrics
 	  
 1. REST API
-	- [x] Expose data with GraphQL
-	- [ ] Expose data with bare Flask
-	- [ ] Design API (Postman)
+	- [x] Expose data 
+		- [x] Flask
+		- [x] GraphQL ~> not very effective
+	- [x] Design API (Postman ~> not effective)
 	- [ ] Insert payments ?
 	- [ ] Handle labels
 		- [ ] Auto labeling on rules
