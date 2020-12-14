@@ -40,7 +40,7 @@ First expected release the friday **15th december 2020**
 
 ## :zap: Quick start
 
-To start the backend server, simply run bellow commands:
+1. To start the backend server, simply run bellow commands:
 
 	``` bash
 		$ export FLASK_APP=controller.py
@@ -69,11 +69,24 @@ To start the backend server, simply run bellow commands:
 	- [ ] Handle labels
 		- [ ] Auto labeling on rules
 		- [ ] Endpoint for labeling
+		- [ ] Create categories and pattern that fall in this category
+			- [ ] Courses
+			- [ ] Amazon
+		- [ ] Can 2 categories share same payments ?
+			- [ ] Need exclusive categories for global expenses pie-chart
+			- [ ] and non-exclusive categories for relative expenses pie-chart
 	
 1. Integration
-	- [ ] Integrate excel data from Société Générale
-	- [ ] Save data in database
-		  
+	- [x] CSV from Societe Generale
+	  - [x] Get all files in directory
+	  - [x] read each file, one after the other
+	  - [x] Parser rows and map to RawPayments
+	- [x] Save in database
+		- [x] Generic object's management in database
+		- [x] If file is duplicate => skip
+	- [ ] View all payments and duplications between files (count same lines in file and across files)
+	- [ ] CSV from N26
+
 1. Statistics
 	- [ ] Define profile
 	- [ ] Get monthly stats (max, mix, avg, fix)
