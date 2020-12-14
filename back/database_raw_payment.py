@@ -10,7 +10,7 @@ def create_table(con):
         (
             id INTEGER,
             value_date TEXT,
-            amount INTEGER,
+            amount REAL,
             direction TEXT,
             title TEXT,
             account_id INTEGER, 
@@ -51,7 +51,7 @@ def get_distinct_file_name(con):
 
 def test_raw_payment_creation():
     con = db.get_connection(":memory:")
-    con = db.get_connection("database/accounting.db")
+    # con = db.get_connection("database/accounting.db")
     create_table(con)
 
     account_id = 1

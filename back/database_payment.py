@@ -10,7 +10,7 @@ def create_table(con):
         (
             id INTEGER, 
             account_id INTEGER, value_date TEXT,
-            amount INTEGER, direction TEXT,
+            amount REAL, direction TEXT,
             title TEXT, 
             creation_date text NOT NULL,
         PRIMARY KEY(account_id, value_date, amount, direction)
