@@ -8,7 +8,7 @@ DB_NAME = "database/accounting.db"
 
 class RawPayment:
     def __init__(
-            self, source, file_name, account_id, value_date, amount, direction, title
+        self, source, file_name, account_id, value_date, amount, direction, title
     ):
         self.source = source
         self.file_name = file_name
@@ -25,7 +25,15 @@ class RawPayment:
         )
 
     def to_tuple(self):
-        return self.value_date, self.amount, self.direction, self.title, self.account_id, self.source, self.file_name
+        return (
+            self.value_date,
+            self.amount,
+            self.direction,
+            self.title,
+            self.account_id,
+            self.source,
+            self.file_name,
+        )
 
 
 # --------------------------- Integrate ---------------------------
