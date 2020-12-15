@@ -54,6 +54,7 @@ First expected release the friday **15th december 2020**
 1. Database
 	- [x] Create schema
 	- [ ] Try to use some DB framework
+	- [ ] Fix the duplicate issue
 	
 1. Payments
 	- [x] Create account
@@ -66,16 +67,9 @@ First expected release the friday **15th december 2020**
 		- [x] GraphQL ~> not very effective
 	- [x] Design API (Postman ~> not effective)
 	- [ ] Insert payments ?
-	- [ ] Handle labels
-		- [ ] Auto labeling on rules
-		- [ ] Endpoint for labeling
-		- [ ] Create categories and pattern that fall in this category
-			- [ ] Courses
-			- [ ] Amazon
-		- [ ] Can 2 categories share same payments ?
-			- [ ] Need exclusive categories for global expenses pie-chart
-			- [ ] and non-exclusive categories for relative expenses pie-chart
-	
+	  
+	- [ ] Expose metrics
+	  
 1. Integration
 	- [x] CSV from Societe Generale
 	  - [x] Get all files in directory
@@ -90,15 +84,23 @@ First expected release the friday **15th december 2020**
 
 1. Statistics
 	- [ ] Low level stats
-	  	- [ ] Min, Max, Avg, opening, closing
+	  	- [x] Min, Max, Avg, opening, closing
 	  	- [ ] Total, credit/debit, unit and amount
-	- [ ] Handle consumption periods (~daily, weekly, monthly)
-	- [ ] Identify fixed income and expenses (rely on labeling to view)
-	- [ ] Get monthly stats (max, mix, avg, fix)
-	- [ ] Get period stats (day, week, month, semester, year)
+	- [x] Handle consumption periods (~daily, weekly, monthly)
+	- [ ] Identify FIXED income and expenses (try to rely on LABELS)
 	- [ ] Define profile
 	- [ ] string similarity calculation to identify recurrent transactions 
 	  
+1. Labels
+	- [ ] Auto labeling on rules
+	- [ ] Endpoint for labeling
+	- [ ] Create categories and pattern that fall in this category
+		- [ ] Courses
+		- [ ] Amazon
+	- [ ] Can 2 categories share same payments ?
+		- [ ] Need exclusive categories for global expenses pie-chart
+		- [ ] and non-exclusive categories for relative expenses pie-chart
+	
 1. Front
 	- [ ] Consumption map on a calendar just like github contribution calendar
 	- [ ] Display payments curve
