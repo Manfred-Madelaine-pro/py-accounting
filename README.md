@@ -86,15 +86,22 @@ First expected release the friday **15th december 2020**
 		- [x] If file is duplicate => skip
 	- [ ] View all payments and duplications between files (count same lines in file and across files)
 	- [ ] CSV from N26
+	- [ ] 4% of the database (72/1685 payments) is corrupted by duplicated values from different files
 
 1. Statistics
-	- [ ] Define profile
+	- [ ] Low level stats
+	  	- [ ] Min, Max, Avg, opening, closing
+	  	- [ ] Total, credit/debit, unit and amount
+	- [ ] Handle consumption periods (~daily, weekly, monthly)
+	- [ ] Identify fixed income and expenses (rely on labeling to view)
 	- [ ] Get monthly stats (max, mix, avg, fix)
 	- [ ] Get period stats (day, week, month, semester, year)
+	- [ ] Define profile
 	- [ ] string similarity calculation to identify recurrent transactions 
 	  
 1. Front
 	- [ ] Consumption map on a calendar just like github contribution calendar
+	- [ ] Display payments curve
 
 
 ## :joystick: More examples
