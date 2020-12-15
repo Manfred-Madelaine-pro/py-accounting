@@ -36,13 +36,13 @@ def get_account(id):
 # ------------------- Test -------------------
 
 
-def get_all_payments(account):
+def get_all_payments(account_id):
     import database_payment as p_db
 
     DB_NAME = "database/accounting.db"
 
     con = p_db.db.get_connection(DB_NAME)
-    raw_payments = p_db.get_all_payments_by_account_id(con, account.id)
+    raw_payments = p_db.get_all_payments_by_account_id(con, account_id)
 
     import payment
 
@@ -55,7 +55,7 @@ def test():
     account = Account(id=1)
 
     # get all payments for account 1
-    account.payments = get_all_payments(account)
+    account.payments = get_all_payments(account.id)
     # [print(payment) for payment in account.payments]
 
     metrics_per_day = account.get_metrics_per_day()

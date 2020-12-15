@@ -26,7 +26,7 @@ class Metrics:
     def __str__(self):
         return (
             f"{self.period} (--{self.debits_count}/++{self.credits_count}): {self.sum_payment:>+10,.2f}, "
-            f"(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f})"
+            f"(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f} / avg:{self.avg_payment:>+10,.2f})"
         )
 
     def to_json(self):
@@ -34,7 +34,6 @@ class Metrics:
 
     def simple_metrics(self, payments):
         amounts = [payment.get_signed_amount() for payment in payments]
-        print(amounts)
         self.min_payment = min(amounts)
         self.max_payment = max(amounts)
         self.sum_payment = sum(amounts)
@@ -98,13 +97,16 @@ def str_to_date(str):
 
 
 def test():
-    payments = generate_fake_payments()
+    # payments = generate_fake_payments()
+    payments = fetch_from_db()
     sorted_payments = sorted(payments, key=lambda p: p.value_date, reverse=True)
-    [print(p) for p in sorted_payments]
+    # [print(p) for p in sorted_payments]
 
     # test_all_group_by(payments)
-    metrics = calculate_metrics(DAY, payments)
-    [print(metric) for _, metric in metrics.items()]
+    for period in SUPPORTED_PERIODS[-1:1:-1]:
+        print(period, ":")
+        metrics = calculate_metrics(period, payments)
+        [print("\t", metric) for _, metric in metrics.items()]
 
 
 def generate_fake_payments():
@@ -122,6 +124,14 @@ def generate_fake_payments():
                          f"pymt {i}",
                          date.today())
             for i in range(1, 10)]
+
+
+def fetch_from_db():
+    import account as acc
+
+    account_id = 1
+    return acc.get_all_payments(account_id)
+
 
 
 def test_all_group_by(payments):
