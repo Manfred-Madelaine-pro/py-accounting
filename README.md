@@ -83,9 +83,9 @@ First expected release the friday **15th december 2020**
 	- [ ] 4% of the database (72/1685 payments) is corrupted by duplicated values from different files
 
 1. Statistics
-	- [ ] Low level stats
+	- [x] Low level stats
 	  	- [x] Min, Max, Avg, opening, closing
-	  	- [ ] Total, credit/debit, unit and amount
+	  	- [x] Total, credit/debit, unit and amount
 	- [x] Handle consumption periods (~daily, weekly, monthly)
 	- [ ] Identify FIXED income and expenses (try to rely on LABELS)
 	- [ ] Define profile

@@ -17,16 +17,14 @@ UP_TO_YEAR_DIGITS = 4
 class Metrics:
     def __init__(self, period, payments):
         self.period = period
-        # self.payments = payments
-
-        self.credits_count = len([1 for p in payments if p.get_signed_amount() >= 0])
-        self.debits_count = len(payments) - self.credits_count
         self.simple_metrics(payments)
+        self.total_metrics(payments)
 
     def __str__(self):
         return (
-            f"{self.period} (--{self.debits_count}/++{self.credits_count}): {self.sum_payment:>+10,.2f}, "
-            f"(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f} / avg:{self.avg_payment:>+10,.2f})"
+            f"{self.period} (--{self.debits_count:>2}/++{self.credits_count:>2}): "
+            f"\t{self.total_debits:>+10,.2f} + {self.total_credits:>10,.2f} = {self.sum_payment:>+10,.2f}, "
+            f"\t(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f} / avg:{self.avg_payment:>+10,.2f})"
         )
 
     def to_json(self):
@@ -38,6 +36,19 @@ class Metrics:
         self.max_payment = max(amounts)
         self.sum_payment = sum(amounts)
         self.avg_payment = sum(amounts) / len(amounts)
+
+    def total_metrics(self, payments):
+        credits, debits = [], []
+        for p in payments:
+            amount = p.get_signed_amount()
+            credits += [amount] if amount >= 0 else []
+            debits += [amount] if amount < 0 else []
+
+        self.credits_count = len(credits)
+        self.total_credits = sum(credits)
+
+        self.debits_count = len(debits)
+        self.total_debits = sum(debits)
 
 
 # ------------------- Calculate Metrics -------------------
@@ -97,41 +108,18 @@ def str_to_date(str):
 
 
 def test():
-    # payments = generate_fake_payments()
     payments = fetch_from_db()
-    sorted_payments = sorted(payments, key=lambda p: p.value_date, reverse=True)
-    # [print(p) for p in sorted_payments]
 
-    # test_all_group_by(payments)
     for period in SUPPORTED_PERIODS[-1:1:-1]:
         print(period, ":")
         metrics = calculate_metrics(period, payments)
         [print("\t", metric) for _, metric in metrics.items()]
 
 
-def generate_fake_payments():
-    import payment as pymt
-    from datetime import date
-
-    acc_id = 1
-    d = ["D", "C"]
-    vds = ["2020-11-10", "2020-12-11", "2020-12-12"]
-    return [pymt.Payment(i,
-                         acc_id,
-                         vds[i % len(vds)],
-                         i * 10,
-                         d[i % len(d)],
-                         f"pymt {i}",
-                         date.today())
-            for i in range(1, 10)]
-
-
 def fetch_from_db():
     import account as acc
 
-    account_id = 1
-    return acc.get_all_payments(account_id)
-
+    return acc.get_all_payments(account_id=1)
 
 
 def test_all_group_by(payments):
