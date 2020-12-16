@@ -1,7 +1,7 @@
 import database as db
 
 
-TABLE_NAME = "payments"
+TABLE_NAME = "v_raw_payments"
 
 
 def create_table(con):

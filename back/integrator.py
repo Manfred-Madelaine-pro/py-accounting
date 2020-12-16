@@ -1,6 +1,6 @@
 import csv
 
-import database_raw_payment as rpdb
+import database_raw_payment as rp_db
 
 
 DB_NAME = "database/accounting.db"
@@ -45,22 +45,22 @@ def integrate(source_name, dir_path):
 
 
 def save(files_raw_payments):
-    con = rpdb.db.get_connection(DB_NAME)
+    con = rp_db.db.get_connection(DB_NAME)
 
     for f_name, raw_payments in files_raw_payments.items():
         # if file already in DB skip
         if not already_integrated(con, f_name):
             rows = [rp.to_tuple() for rp in raw_payments]
-            rpdb.insert_payments_rows(con, rows)
+            rp_db.insert_payments_rows(con, rows)
 
-    raw_payments = rpdb.select_all_raw_payments(con)
+    raw_payments = rp_db.select_all_raw_payments(con)
     con.close()
 
-    rpdb.db.print_table(raw_payments)
+    rp_db.db.print_table(raw_payments)
 
 
 def already_integrated(con, f_name):
-    sql_results = rpdb.get_distinct_file_name(con)
+    sql_results = rp_db.get_distinct_file_name(con)
     files_integrated = [r["file_name"] for r in sql_results]
     return f_name in files_integrated
 
