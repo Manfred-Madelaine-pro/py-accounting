@@ -92,6 +92,17 @@ First expected release the friday **15th december 2020**
 	- [ ] string similarity calculation to identify recurrent transactions 
 	  
 1. Labels
+	- [ ] Tag all payments 
+	- [ ] Define groups based on tags
+	- [ ] Create groups that matches perfectly one tag, multiple tags or other groups 
+	- [ ] Apply metrics on groups
+	- [ ] Allow enforced new tag for payment id
+
+	- [ ] Count payments in groups
+	- [ ] Count payments untagged 
+	- [ ] Identify overlapping tags
+	- [ ] 
+	  
 	- [ ] Auto labeling on rules
 	- [ ] Endpoint for labeling
 	- [ ] Create categories and pattern that fall in this category
@@ -101,6 +112,8 @@ First expected release the friday **15th december 2020**
 		- [ ] Need exclusive categories for global expenses pie-chart
 		- [ ] and non-exclusive categories for relative expenses pie-chart
 	
+1. Integrate PDFs
+   
 1. Front
 	- [ ] Consumption map on a calendar just like github contribution calendar
 	- [ ] Display payments curve
