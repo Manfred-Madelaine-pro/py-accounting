@@ -24,7 +24,7 @@ class Metrics:
         return (
             f"{self.period} (--{self.debits_count:>2}/++{self.credits_count:>2}): "
             f"\t{self.total_debits:>+10,.2f} + {self.total_credits:>10,.2f} = {self.sum_payment:>+10,.2f}, "
-            f"\t(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>+10,.2f} / avg:{self.avg_payment:>+10,.2f})"
+            f"\t(min:{self.min_payment:>+10,.2f} / max:{self.max_payment:>10,.2f})"
         )
 
     def to_json(self):
@@ -35,7 +35,6 @@ class Metrics:
         self.min_payment = min(amounts)
         self.max_payment = max(amounts)
         self.sum_payment = sum(amounts)
-        self.avg_payment = sum(amounts) / len(amounts)
 
     def total_metrics(self, payments):
         credits, debits = [], []
