@@ -31,7 +31,7 @@ Project pitched and started the _11th december 2020_
     
     _For more information, go to [Python Virtual Environment Official Documentation](https://docs.python.org/3/library/venv.html)._
 
-1. Install the project dependencies:
+1. :package: Install the project dependencies:
 
     ``` bash
     apt install python3-pip
@@ -56,6 +56,10 @@ Project pitched and started the _11th december 2020_
 
 ## :art: Architecture
 
+### Version 1
+![Accounting Architecture](img/accounting_diagram_flat.png)
+
+### Version 2
 ![Accounting Architecture](img/accounting_diagram.png)
 
 
