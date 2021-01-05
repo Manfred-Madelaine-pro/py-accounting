@@ -7,7 +7,12 @@ Aim is to propose a simple algorithm that read, parse, store, process and displa
 
 ## :tada: Examples
 
+<details>
+<summary>Example in old version (Click to expand)</summary>
+
 ![running main script](img/main.PNG)
+
+</details>
 
 ## :spiral_calendar: Dates
 
@@ -20,7 +25,7 @@ Project pitched and started the _11th december 2020_
 
 
 ## :electric_plug: Dependencies
-1. Set your Virtual Environment:
+1. :desktop_computer: Set your Virtual Environment:
 
     ``` bash
     # Download venv librairy
@@ -126,25 +131,30 @@ Project pitched and started the _11th december 2020_
    - [ ] Percentage of payments (qty & amount) labeled (or group) for a given period
    - [ ] Pie chart for example
 	
-1. Labels
-	- [ ] Tag all payments 
-	- [ ] Define groups based on tags
-	- [ ] Create groups that matches perfectly one tag, multiple tags or other groups 
-	- [ ] Apply metrics on groups
-	- [ ] Allow enforced new tag for payment id
+	<details>
+	<summary>Filter v1 (Click to expand)</summary>
+	
+	1. Labels
+		- [ ] Tag all payments 
+		- [ ] Define groups based on tags
+		- [ ] Create groups that matches perfectly one tag, multiple tags or other groups 
+		- [ ] Apply metrics on groups
+		- [ ] Allow enforced new tag for payment id
+	
+		- [ ] Count payments in groups
+		- [ ] Count payments untagged 
+		- [ ] Identify overlapping tags
+		  
+		- [ ] Auto labeling on rules
+		- [ ] Endpoint for labeling
+		- [ ] Create categories and pattern that fall in this category
+			- [ ] Courses
+			- [ ] Amazon
+		- [ ] Can 2 categories share same payments ?
+			- [ ] Need exclusive categories for global expenses pie-chart
+			- [ ] and non-exclusive 
 
-	- [ ] Count payments in groups
-	- [ ] Count payments untagged 
-	- [ ] Identify overlapping tags
-	  
-	- [ ] Auto labeling on rules
-	- [ ] Endpoint for labeling
-	- [ ] Create categories and pattern that fall in this category
-		- [ ] Courses
-		- [ ] Amazon
-	- [ ] Can 2 categories share same payments ?
-		- [ ] Need exclusive categories for global expenses pie-chart
-		- [ ] and non-exclusive categories for relative expenses pie-chart
+   </details>
 	
 1. Integrate PDFs
    - [x] Download all PDFs available from banking platforms
