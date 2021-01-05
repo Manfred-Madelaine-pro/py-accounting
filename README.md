@@ -37,6 +37,8 @@ Project pitched and started the _11th december 2020_
     apt install python3-pip
     pip install PTable
     pip install Flask
+   
+	pip install PyPDF2
     ```
 
 
