@@ -1,3 +1,5 @@
+<img src="img/logo.png" align="right" />
+
 # :classical_building: Accounting 
 
 Aim is to propose a simple algorithm that read, parse, store, process and display financial data for individuals :money_with_wings:.
@@ -56,11 +58,15 @@ Project pitched and started the _11th december 2020_
 
 ## :art: Architecture
 
-### Version 1
-![Accounting Architecture](img/accounting_diagram_flat.png)
-
 ### Version 2
 ![Accounting Architecture](img/accounting_diagram.png)
+
+<details>
+<summary>Version 1 (Click to expand)</summary>
+
+![Accounting Architecture](img/accounting_diagram_flat.png)
+ 
+</details>
 
 
 ## :clipboard: Tasks
