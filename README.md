@@ -47,9 +47,9 @@ Project pitched and started the _11th december 2020_
 1. To start the backend server, simply run bellow commands:
 
 	``` bash
-		$ export FLASK_APP=controller.py
-		$ export FLASK_ENV=development
-		$ flask run
+		export FLASK_APP=controller.py
+		export FLASK_ENV=development
+		flask run
 		 * Running on http://127.0.0.1:5000/
 	```
 
