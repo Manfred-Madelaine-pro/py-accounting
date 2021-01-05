@@ -2,6 +2,7 @@
 
 Aim is to propose a simple algorithm that read, parse, store, process and display financial data for individuals :money_with_wings:.
 
+
 ## :tada: Examples
 
 ![running main script](img/main.PNG)
@@ -12,7 +13,8 @@ Aim is to propose a simple algorithm that read, parse, store, process and displa
 Project pitched and started the _11th december 2020_
 
 ### :dart: Release date 
-First expected release the friday **15th december 2020** 
+- First expected release the friday **15th december 2020** 
+- Second expected release the **10th january 2021** 
 
 
 ## :electric_plug: Dependencies
@@ -36,7 +38,13 @@ First expected release the friday **15th december 2020**
     pip install PTable
     pip install Flask
     pip install extraction graphene flask-graphql requests
+    
+    pip install tabula-py # PDF scrapper
+   	apt install default-jdk
+   
+	pip install PyPDF2
     ```
+
 
 ## :zap: Quick start
 
@@ -48,6 +56,12 @@ First expected release the friday **15th december 2020**
 		$ flask run
 		 * Running on http://127.0.0.1:5000/
 	```
+
+
+## :art: Architecture
+
+![Accounting Architecture](img/accounting_diagram.png)
+
 
 ## :clipboard: Tasks
 
@@ -84,13 +98,28 @@ First expected release the friday **15th december 2020**
 
 1. Statistics
 	- [x] Low level stats
-	  	- [x] Min, Max, Avg, opening, closing
-	  	- [x] Total, credit/debit, unit and amount
+	  - [x] Total credit/debit for quantity and amount
+	  - [x] Min, Max, Avg, opening, closing
 	- [x] Handle consumption periods (~daily, weekly, monthly)
+	  	- [ ] Add periodicity: Trimester, Semester
+	- [ ] Metrics column info
+		- [ ] Add header info line for metrics column
+		- [ ] Add footer avg line for metrics column
 	- [ ] Identify FIXED income and expenses (try to rely on LABELS)
 	- [ ] Define profile
 	- [ ] string similarity calculation to identify recurrent transactions 
 	  
+1. Filter v2
+   - [ ] Allow labeling (Add, remove, reset)
+   - [ ] Auto labeling on token 
+	   - [ ] Available labels: transport, rent, salary, phone, AMZ, SG, Healthcare...
+   - [ ] Filter payments on account & list of labels 
+   - [ ] Ensure payments uniqueness
+   - [ ] Group some labels together (expose groups to client ?) 
+   - [ ] Filter payments on account & group
+   - [ ] Percentage of payments (qty & amount) labeled (or group) for a given period
+   - [ ] Pie chart for example
+	
 1. Labels
 	- [ ] Tag all payments 
 	- [ ] Define groups based on tags
@@ -101,7 +130,6 @@ First expected release the friday **15th december 2020**
 	- [ ] Count payments in groups
 	- [ ] Count payments untagged 
 	- [ ] Identify overlapping tags
-	- [ ] 
 	  
 	- [ ] Auto labeling on rules
 	- [ ] Endpoint for labeling
@@ -113,6 +141,16 @@ First expected release the friday **15th december 2020**
 		- [ ] and non-exclusive categories for relative expenses pie-chart
 	
 1. Integrate PDFs
+   - [x] Download all PDFs available from banking platforms
+   - [ ] Read Parse (PyPDF2, tabula)
+   - [ ] Extract data ~> not very effective
+   - [ ] Store raw payments
+
+1. Architecture
+	- [ ] Design first diagram of internal services
+	  - [ ] Try coding schema
+	- [ ] Add the schema to README 
+	- [ ] Define API specification using Swagger
    
 1. Front
 	- [ ] Consumption map on a calendar just like github contribution calendar
