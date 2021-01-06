@@ -15,7 +15,7 @@ def page_not_found(error):
     return render_template("page_not_found.html"), 404
 
 
-@app.route("/accounts/<id>/payments")
+@app.route("api/v1/accounts/<id>/payments")
 def accounts_payments_api(id):
     payments = account.get_account(id).payments
     if not payments:
@@ -24,7 +24,8 @@ def accounts_payments_api(id):
     return jsonify([payment.to_json() for payment in payments])
 
 
-@app.route("/accounts/<id>/metrics")
+# TODO factorize api/v1
+@app.route("api/v1/accounts/<id>/metrics")
 def accounts_metrics_api(id):
     metrics = account.get_account_metrics(id)
 
