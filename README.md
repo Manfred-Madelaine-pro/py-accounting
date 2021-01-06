@@ -31,7 +31,7 @@ Project pitched and started the _11th december 2020_
     # Download venv librairy
     apt-get install python3-venv -y
     # Create your venv
-    py -m venv my_venv
+    python3 -m venv venv
     # Activate your venv
     . venv/bin/activate
     ```
@@ -57,7 +57,7 @@ Project pitched and started the _11th december 2020_
 		export FLASK_APP=controller.py
 		export FLASK_ENV=development
 		flask run
-		 * Running on http://127.0.0.1:5000/
+		# * Running on http://127.0.0.1:5000/
 	```
 
 
