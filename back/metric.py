@@ -92,6 +92,7 @@ def group_by_year(payments):
 
 # -- Utils
 
+
 def group(payments, key):
     grouped_by = {}
     for p in payments:

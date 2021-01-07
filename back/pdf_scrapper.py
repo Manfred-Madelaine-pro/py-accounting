@@ -2,7 +2,7 @@ import PyPDF2
 
 
 def integrate(pdf_path):
-    pdf = open(pdf_path, 'rb')
+    pdf = open(pdf_path, "rb")
     pdf_reader = PyPDF2.PdfFileReader(pdf)
 
     cleaned_content = []
@@ -16,7 +16,7 @@ def integrate(pdf_path):
 
 
 def clean(page):
-    res = [line.strip() for line in page.split('\n') if len(line) > 3]
+    res = [line.strip() for line in page.split("\n") if len(line) > 3]
     total_line_size = sum([len(res[i]) for i in range(min(len(res), 10))])
     print(total_line_size)
     if total_line_size <= 10:
@@ -51,7 +51,7 @@ def save_to_file(pdf_path, content):
     new_path = pdf_path.split("/")
     del new_path[-2]
     new_path = "/".join(new_path).replace(".pdf", ".txt")
-    with open(new_path, 'w') as file:
+    with open(new_path, "w") as file:
         for c in content:
             file.write(c + "\n")
 
@@ -86,6 +86,7 @@ def test(directory):
 
         if count > 21:
             break
+
 
 if __name__ == "__main__":
     dir_path = "../data/releve_de_compte_sg/"

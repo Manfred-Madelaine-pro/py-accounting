@@ -1,5 +1,3 @@
-
-
 # payments have only one tag => apply tag based on regex or enforce a tag
 # if a payment is already tagged, must confirm the change for the new tag
 # groups use tags to fetch payments
