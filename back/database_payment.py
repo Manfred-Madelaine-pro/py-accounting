@@ -37,8 +37,17 @@ def select_all_payments(con):
     return db.select_all(con, TABLE_NAME)
 
 
-def get_all_payments_by_account_id(con, account_id):
+    # ----------------------- Filter ---------------------------
+
+
+def filter_all_payments_by_account_id(con, account_id):
     select_all = f"SELECT * FROM {TABLE_NAME} WHERE account_id = {account_id};"
+    return con.execute(select_all)
+
+
+def filter_all_payments_by_tokens(con, tokens):
+    filters = ' OR '.join([f"title LIKE '%{token}%'" for token in tokens])
+    select_all = f"SELECT * FROM {TABLE_NAME} WHERE {filters};"
     return con.execute(select_all)
 
 

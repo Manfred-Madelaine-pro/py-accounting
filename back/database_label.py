@@ -81,6 +81,11 @@ def select_all_labels_and_tokens(con):
     return db.select_all(con, LABEL_TOKEN_TABLE)
 
 
+def select_all_tokens_by_label_id(con, label_id):
+    select_all = f"SELECT * FROM {LABEL_TOKEN_TABLE} WHERE label_id = {label_id};"
+    return con.execute(select_all)
+
+
 # ----------------------- Test ---------------------------
 
 

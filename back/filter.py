@@ -1,3 +1,7 @@
+import label as l
+import payment as p
+
+
 # payments have only one tag => apply tag based on regex or enforce a tag
 # if a payment is already tagged, must confirm the change for the new tag
 # groups use tags to fetch payments
@@ -18,12 +22,22 @@
 # on applique un nouveau tag sur toute la table des paiements ou une portion (date)
 # (payment_id, tag_id)
 
+
+# ------------------- Filter -------------------
+
+def filter_payments_by_labels():
+    labels = l.get_all_labels()
+    all_tokens = [token for label in labels for token in label.tokens]
+
+    payments = p.get_all_payments_containing(all_tokens)
+    [print(payment) for payment in payments]
+
+
 # ------------------- Test -------------------
 
 
 def test():
-    # payments = fetch_from_db()
-    print("Hi")
+    filter_payments_by_labels()
 
 
 def fetch_from_db():
