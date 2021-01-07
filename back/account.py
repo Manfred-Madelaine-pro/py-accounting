@@ -47,7 +47,7 @@ def get_all_payments(account_id):
     import payment
 
     payments = payment.map_to_domain(raw_payments)
-
+    con.close()
     return sorted(payments, key=lambda p: p.value_date, reverse=True)
 
 

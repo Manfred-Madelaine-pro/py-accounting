@@ -62,7 +62,7 @@ def test():
 
     payments = map_to_domain(raw_payments)
     sorted_payments = sorted(payments, key=lambda p: p.value_date, reverse=True)
-
+    con.close()
     # display all payments
     [print(payment) for payment in sorted_payments]
 
