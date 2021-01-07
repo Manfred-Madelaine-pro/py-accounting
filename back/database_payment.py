@@ -8,7 +8,7 @@ def create_table(con):
     sql_create_table = """
         CREATE TABLE IF NOT EXISTS TABLE_NAME
         (
-            id INTEGER, 
+            id INTEGER PRIMARY KEY, 
             account_id INTEGER, value_date TEXT,
             amount REAL, direction TEXT,
             title TEXT, 
