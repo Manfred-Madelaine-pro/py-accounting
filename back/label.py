@@ -22,22 +22,18 @@ DB_NAME = "database/accounting.db"
 
 
 class Label:
-    def __init__(self, id, name, tokens=[]):
+    def __init__(self, id, name, tokens=None):
+        if tokens is None:
+            tokens = []
         self.id = id
         self.name = name
         self.tokens = tokens
 
     def __str__(self):
-        return f"Label #({self.id}): {self.name} (tokens={self.tokens:})"
+        return f"Label #{self.id}: {self.name:20} tokens=({', '.join([str(token) for token in self.tokens])})"
 
     def to_json(self):
         return json.dumps(self.__dict__)
-
-    def to_tuple(self): # TODO list in tuple /!\
-        return (
-            self.name,
-            self.tokens,
-        )
 
     @staticmethod
     def map(label_dto):
@@ -45,6 +41,15 @@ class Label:
             label_dto["id"],
             label_dto["name"],
         )
+
+
+class Token:
+    def __init__(self, id, token):
+        self.id = id
+        self.token = token
+
+    def __str__(self):
+        return f"#{self.id}: {self.token}"
 
 
 class TaggedPayment:
@@ -57,6 +62,7 @@ class TaggedPayment:
             self.payment_id,
             self.label_id,
         )
+
 
 # ------------------- Mapper -------------------
 
@@ -73,49 +79,79 @@ def to_domain(token_dto):
     return token_dto["token"]
 
 
+def label_token_mapping(label_token_dto):
+    return (
+        label_token_dto["label_id"],
+        label_token_dto["name"],
+        label_token_dto["token_id"],
+        label_token_dto["token"],
+    )
+
+
 # ------------------- Get -------------------
 
 
 def get_all_labels():
     con = l_db.db.get_connection(DB_NAME)
-    labels_dto = l_db.select_all_labels(con)
+    labels_with_tokens_dto = l_db.select_all_labels_with_tokens(con)
 
-    labels = labels_mapping(labels_dto)
-    for label in labels:
-        tokens = l_db.select_all_tokens_by_label_id(con, label.id)
-        label.tokens = tokens_mapping(tokens)
+    labels = {}
+    for label_token in labels_with_tokens_dto:
+        label_id, name, token_id, token = label_token_mapping(label_token)
+        labels[label_id] = labels.get(label_id, Label(label_id, name))
+        labels[label_id].tokens += [Token(token_id, token)] if token else []
 
     con.close()
-    return sorted(labels, key=lambda l: l.name)
+    return sorted(labels.values(), key=lambda l: l.name)
+
+
+def get_all_tagged_payments():
+    con = l_db.db.get_connection(DB_NAME)
+    labels_with_tokens_dto = l_db.select_all_labels_with_tokens(con)
+
+    labels = {}
+    for label_token in labels_with_tokens_dto:
+        label_id, name, token_id, token = label_token_mapping(label_token)
+        labels[label_id] = labels.get(label_id, Label(label_id, name))
+        labels[label_id].tokens += [Token(token_id, token)] if token else []
+
+    con.close()
+    return sorted(labels.values(), key=lambda l: l.name)
 
 
 # ------------------- Actions -------------------
 
 
-def create(label):
-    pass
+def connect_and_execute(action, *args):
+    con = l_db.db.get_connection(DB_NAME)
+    action(con, *args)
+    con.commit()
+    con.close()
+
+
+def create(label_name):
+    connect_and_execute(l_db.insert_label, label_name)
+
+
+def update_name(label_id, new_name):
+    connect_and_execute(l_db.update_label, label_id, new_name)
 
 
 def add_token(label_id, token):
     # if token not exists
-    pass
+    connect_and_execute(l_db.insert_token, label_id, token)
 
 
-def remove_token(label_id, token):
+def remove_token(label_id, token_id):
     # if token not exists
-    pass
-
-
-def reset_token(label_id):
     pass
 
 
 # ------------------- Tag -------------------
 
+
 def tag(payments):
-    # fetch all tags
     labels = get_all_labels()
-    # flattened_tokens = [token for label in labels for token in label.tokens]
 
     tagged_payments = []
     for label in labels:
@@ -123,13 +159,13 @@ def tag(payments):
             if match(payment.title, label):
                 tagged_payments += [TaggedPayment(payment.id, label.id)]
 
-    # save batch to raw_payments_labels
-    pass
+    save_tagged_payment(tagged_payments)  # TODO test
 
 
 def match(text, label):
-    # use regex ? test perfs
-    pass
+    for t in label.tokens:
+        print(t.token.lower() in text.lower(), t.token.lower(), text.lower(), text.lower().find(t.token.lower()))
+    return len([1 for t in label.tokens if t.token.lower() in text.lower()]) > 0
 
 
 def untag(payments, tags):
@@ -139,30 +175,55 @@ def untag(payments, tags):
 
 # ------------------- Save -------------------
 
+# TODO tests
 def save_tagged_payment(tagged_payments):
     con = l_db.db.get_connection(DB_NAME)
 
-    rows = [tp.to_tuple() for tp in tagged_payments]
-    l_db.insert_payments_rows(con, rows)
+    [l_db.insert_tagged_payment(con, *tp.to_tuple()) for tp in tagged_payments]
 
-    raw_payments = l_db.select_all_raw_payments(con)
+
+    raw_payments = l_db.select_all_tagged_payments(con)
+    # l_db.db.print_table(raw_payments)
+
     con.close()
-
-    l_db.db.print_table(raw_payments)
 
 
 # ------------------- Test -------------------
 
 
 def test():
-    # get all
+    # insert new label
+    new_label = "Retrait DAB"
+    create(new_label)
+    new_label = "Caisse d'Allocation Familliale"
+    create(new_label)
+    new_label = "Employeur SG"
+    create(new_label)
+
+    # update name
+    # update_name(6, "Caisse d'Allocation Familliale")
+
     labels = get_all_labels()
     [print(label) for label in labels]
 
-    # insert new label
     # complete with token
-    # filter payments
+    new_token = "RETRAIT DAB"
+    add_token(5, new_token)
+    new_token = "CAF DE L ESSONNE"
+    add_token(6, new_token)
+    new_token = "SOCIETE GENERALE MOTIF: Appointements"
+    add_token(7, new_token)
+
+
+def test_on_payments():
+    # get pymts
+    import payment as p
+    payments = p.get_all_payments()
+    tag(payments)
+
+    # get tagged p
 
 
 if __name__ == "__main__":
     test()
+    test_on_payments()

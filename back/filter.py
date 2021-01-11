@@ -25,6 +25,7 @@ import payment as p
 
 # ------------------- Filter -------------------
 
+
 def filter_payments_by_labels():
     labels = l.get_all_labels()
     all_tokens = [token for label in labels for token in label.tokens]

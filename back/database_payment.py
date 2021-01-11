@@ -36,7 +36,6 @@ def insert_rows(con, rows):
 def select_all_payments(con):
     return db.select_all(con, TABLE_NAME)
 
-
     # ----------------------- Filter ---------------------------
 
 
@@ -46,7 +45,7 @@ def filter_all_payments_by_account_id(con, account_id):
 
 
 def filter_all_payments_by_tokens(con, tokens):
-    filters = ' OR '.join([f"title LIKE '%{token}%'" for token in tokens])
+    filters = " OR ".join([f"title LIKE '%{token}%'" for token in tokens])
     select_all = f"SELECT * FROM {TABLE_NAME} WHERE {filters};"
     return con.execute(select_all)
 

@@ -24,6 +24,14 @@ def insert(con, sql_insert, rows):
             return "Line already exists."
 
 
+def insert_one(con, sql_insert):
+    with con:
+        try:
+            con.execute(sql_insert)
+        except sqlite3.IntegrityError:
+            return "Line already exists."
+
+
 def select_all(con, table_name):
     select_all = f"SELECT * FROM {table_name};"
     return con.execute(select_all)

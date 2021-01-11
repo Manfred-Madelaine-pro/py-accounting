@@ -11,7 +11,7 @@ DB_NAME = "database/accounting.db"
 
 class Payment:
     def __init__(
-            self, id, account_id, value_date, amount, direction, title, creation_date
+        self, id, account_id, value_date, amount, direction, title, creation_date
     ):
         self.id = id
         self.account_id = account_id
@@ -56,7 +56,7 @@ def payments_mapping(payments):
 # ----------------------- Get ---------------------------
 
 
- # TODO used ?
+# TODO used ?
 def get_all_payments():
     con = p_db.db.get_connection(DB_NAME)
     raw_payments = p_db.select_all_payments(con)
