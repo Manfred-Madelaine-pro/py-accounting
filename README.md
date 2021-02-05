@@ -57,7 +57,7 @@ Project pitched and started the _11th december 2020_
 		mkdir -p back/database/ && touch back/database/accounting.db
 		mkdir -p data/sg/ 
  		# create the input directory for file integration
- ```
+    ```
 
 1. To start the backend server, simply run bellow commands:
 
