@@ -23,6 +23,25 @@ def create_table(con):
     db.create(con, sql_create_table.replace("TABLE_NAME", TABLE_NAME))
 
 
+def create_view(con):
+    sql_create_view = """
+        CREATE VIEW IF NOT EXISTS v_raw_payments AS
+        SELECT MAX(id) id, 
+        1 AS account_id,
+        account_id AS source_account_id,
+        SUBSTR(value_date, 7, 4) || '-' ||
+        SUBSTR(value_date, 4, 2) || '-' ||
+        SUBSTR(value_date, 1,2) AS value_date,
+        amount, direction, title, 
+        MAX(creation_date) creation_date,
+        COUNT(*) identical_payments
+        FROM raw_payments
+        GROUP BY value_date, amount, direction, title
+        ORDER BY value_date
+    """
+    db.create(con, sql_create_view)
+
+
 def insert_payments_rows(con, rows):
     sql_insert_rows = """
         INSERT INTO TABLE_NAME
@@ -51,8 +70,9 @@ def get_distinct_file_name(con):
 
 def test_raw_payment_creation():
     con = db.get_connection(":memory:")
-    # con = db.get_connection("database/accounting.db")
-    create_table(con)
+    con = db.get_connection("database/accounting.db")
+    # create_table(con)
+    create_view(con)
 
     account_id = 1
     raw_payments = [
@@ -61,9 +81,9 @@ def test_raw_payment_creation():
         ("2020-12-20", "15", "D", "netflix", account_id, "SG", "file.csv"),
     ]
 
-    insert_payments_rows(con, raw_payments)
-    raw_payments = select_all_raw_payments(con)
-    db.print_table(raw_payments)
+    # insert_payments_rows(con, raw_payments)
+    # raw_payments = select_all_raw_payments(con)
+    # db.print_table(raw_payments)
 
     con.close()
 

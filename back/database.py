@@ -29,7 +29,7 @@ def insert_one(con, sql_insert):
         try:
             con.execute(sql_insert)
         except sqlite3.IntegrityError:
-            return "Line already exists."
+            print("Line already exists.")
 
 
 def select_all(con, table_name):

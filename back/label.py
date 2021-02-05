@@ -152,7 +152,8 @@ def tag(payments):
 
 def match(text, label):
     for t in label.tokens:
-        print(t.token.lower() in text.lower(), t.token.lower(), text.lower(), text.lower().find(t.token.lower()))
+        if t.token.lower() in text.lower():
+            print(t.token.lower(), "=>", text.lower())
     return len([1 for t in label.tokens if t.token.lower() in text.lower()]) > 0
 
 
@@ -184,7 +185,7 @@ def test():
     create(new_label)
     new_label = "Caisse d'Allocation Familliale"
     create(new_label)
-    new_label = "Employeur SG"
+    new_label = "Employeur SG" # Salaire
     create(new_label)
     new_label = "Nexity Studea"
     create(new_label)
@@ -221,37 +222,37 @@ def test():
 
     # complete with token
     new_token = "RETRAIT DAB"
-    add_token(5, new_token)
+    add_token(1, new_token)
     new_token = "CAF DE L ESSONNE"
-    add_token(6, new_token)
+    add_token(2, new_token)
     new_token = "SOCIETE GENERALE MOTIF: Appointements"
-    add_token(7, new_token)
+    add_token(3, new_token)
     new_token = "Nexity studea"
-    add_token(8, new_token)
+    add_token(4, new_token)
     new_token = "Quantum Cats Group"
-    add_token(9, new_token)
+    add_token(5, new_token)
     new_token = "AUCHAN VILLEBON"
-    add_token(10, new_token)
+    add_token(6, new_token)
     new_token = "CARREFOURMARKET"
-    add_token(11, new_token)
+    add_token(7, new_token)
     new_token = "JLT MATIC"
-    add_token(12, new_token)
+    add_token(8, new_token)
     new_token = "RATP"
-    add_token(13, new_token)
+    add_token(9, new_token)
     new_token = "Navigo"
-    add_token(14, new_token)
+    add_token(10, new_token)
     new_token = "BOUYGUES TELECOM"
-    add_token(15, new_token)
+    add_token(11, new_token)
     new_token = "ELECTRICITE DE FRANCE"
-    add_token(16, new_token)
+    add_token(12, new_token)
     new_token = "DGFIP IMPOT"
-    add_token(17, new_token)
+    add_token(13, new_token)
     new_token = "PAYPAL"
-    add_token(18, new_token)
+    add_token(14, new_token)
     new_token = "Netflix"
-    add_token(19, new_token)
+    add_token(15, new_token)
     new_token = "MAISON CHOPIN"
-    add_token(20, new_token)
+    add_token(16, new_token)
 
 
 def test_on_payments():
@@ -261,7 +262,7 @@ def test_on_payments():
     payments = p.get_all_payments()
     tag(payments)
 
-    # get tagged p
+    # get all payments with specific tag
 
 
 if __name__ == "__main__":

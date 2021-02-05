@@ -54,9 +54,9 @@ def save(files_raw_payments):
             rp_db.insert_payments_rows(con, rows)
 
     raw_payments = rp_db.select_all_raw_payments(con)
-    con.close()
 
     rp_db.db.print_table(raw_payments)
+    con.close()
 
 
 def already_integrated(con, f_name):

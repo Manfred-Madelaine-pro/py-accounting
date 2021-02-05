@@ -33,7 +33,7 @@ LABEL_FIELDS_TO_INSERT = "id, name, creation_date"
 
 def insert_label_rows(con, rows):
     sql_insert_rows = """
-        INSERT INTO <TABLE_NAME>
+        INSERT OR IGNORE INTO <TABLE_NAME>
             (<FIELDS_TO_INSERT>)
         VALUES
             ((SELECT IFNULL(MAX(id), 0) + 1 FROM <TABLE_NAME>), 
@@ -51,7 +51,7 @@ def insert_label_rows(con, rows):
 
 def insert_label(con, name):
     sql_insert_label = """
-        INSERT INTO <TABLE_NAME>
+        INSERT OR IGNORE INTO <TABLE_NAME>
             (<FIELDS_TO_INSERT>)
         VALUES
             ((SELECT IFNULL(MAX(id), 0) + 1 FROM <TABLE_NAME>), 
@@ -93,7 +93,7 @@ LABEL_TOKEN_FIELDS_TO_INSERT = "id, label_id, token, creation_date"
 
 def insert_label_token_rows(con, rows):
     sql_insert_rows = """
-        INSERT INTO <TABLE_NAME>
+        INSERT OR IGNORE INTO <TABLE_NAME>
             (<FIELDS_TO_INSERT>)
         VALUES
             ((SELECT IFNULL(MAX(id), 0) + 1 FROM <TABLE_NAME>), 
@@ -110,7 +110,7 @@ def insert_label_token_rows(con, rows):
 
 
 def insert_token(con, label_id, token):
-    sql_insert_token = """INSERT INTO labels_tokens (id, label_id, token, creation_date)
+    sql_insert_token = """INSERT OR IGNORE INTO labels_tokens (id, label_id, token, creation_date)
     VALUES ((SELECT IFNULL(MAX(id), 0) + 1 FROM labels_tokens),  """
     sql_insert_token += f' "{label_id}", "{token}", DATETIME("now"));'
     db.insert_one(con, sql_insert_token)
@@ -154,7 +154,7 @@ TAGGED_PAYMENT_FIELDS_TO_INSERT = "payment_id, label_id, creation_date"
 
 def insert_tagged_payment_rows(con, rows): # TODO used ?
     sql_insert_rows = """
-        INSERT INTO <TABLE_NAME>
+        INSERT OR IGNORE INTO <TABLE_NAME>
             (<FIELDS_TO_INSERT>)
         VALUES
             (?, ?, 
@@ -170,7 +170,7 @@ def insert_tagged_payment_rows(con, rows): # TODO used ?
 
 
 def insert_tagged_payment(con, payment_id, label_id):
-    sql_insert_token = "INSERT INTO tagged_payments (payment_id, label_id, creation_date)"
+    sql_insert_token = "INSERT OR IGNORE INTO tagged_payments (payment_id, label_id, creation_date)"
     sql_insert_token += f' VALUES ("{payment_id}", "{label_id}", DATETIME("now"));'
     db.insert_one(con, sql_insert_token)
 
@@ -189,7 +189,7 @@ def get_payments_grouped_by_token(con):
 
 def test_label_and_token_creation():
     con = db.get_connection(":memory:")
-    con = db.get_connection("database/accounting.db")
+    # con = db.get_connection("database/accounting.db")
 
     create_table(con, LABEL_TABLE, LABEL_FIELDS)
     create_table(con, LABEL_TOKEN_TABLE, LABEL_TOKEN_FIELDS)
@@ -208,6 +208,12 @@ def test_label_and_token_creation():
         (1, "amz"),
     ]
 
+    tagged_payment = [
+        (1, 1),
+        (1, 2),
+        (2, 3),
+    ]
+
     insert_label_rows(con, labels)
     labels = select_all_labels(con)
     db.print_table(labels)
@@ -217,15 +223,10 @@ def test_label_and_token_creation():
     db.print_table(labels_tokens)
 
     create_table(con, TAGGED_PAYMENT_TABLE, TAGGED_PAYMENT_FIELDS)
-    tagged_payment = [
-        (1, 1),
-        (1, 2),
-        (2, 3),
-    ]
 
     insert_tagged_payment_rows(con, tagged_payment)
     tagged_payment = select_all_tagged_payments(con)
-    # db.print_table(tagged_payment)
+    db.print_table(tagged_payment)
 
     con.close()
 
