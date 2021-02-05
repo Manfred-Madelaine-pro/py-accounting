@@ -8,7 +8,7 @@ def create_table(con):
     sql_create_table = """
         CREATE TABLE IF NOT EXISTS TABLE_NAME
         (
-            id INTEGER, 
+            id INTEGER PRIMARY KEY, 
             account_id INTEGER, value_date TEXT,
             amount REAL, direction TEXT,
             title TEXT, 
@@ -36,9 +36,17 @@ def insert_rows(con, rows):
 def select_all_payments(con):
     return db.select_all(con, TABLE_NAME)
 
+    # ----------------------- Filter ---------------------------
 
-def get_all_payments_by_account_id(con, account_id):
+
+def filter_all_payments_by_account_id(con, account_id):
     select_all = f"SELECT * FROM {TABLE_NAME} WHERE account_id = {account_id};"
+    return con.execute(select_all)
+
+
+def filter_all_payments_by_tokens(con, tokens):
+    filters = " OR ".join([f"title LIKE '%{token}%'" for token in tokens])
+    select_all = f"SELECT * FROM {TABLE_NAME} WHERE {filters};"
     return con.execute(select_all)
 
 

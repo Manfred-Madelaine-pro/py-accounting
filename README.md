@@ -1,10 +1,18 @@
+<img src="img/logo.png" align="right" />
+
 # :classical_building: Accounting 
 
 Aim is to propose a simple algorithm that read, parse, store, process and display financial data for individuals :money_with_wings:.
 
+
 ## :tada: Examples
 
+<details>
+<summary>Example in old version (Click to expand)</summary>
+
 ![running main script](img/main.PNG)
+
+</details>
 
 ## :spiral_calendar: Dates
 
@@ -12,42 +20,67 @@ Aim is to propose a simple algorithm that read, parse, store, process and displa
 Project pitched and started the _11th december 2020_
 
 ### :dart: Release date 
-First expected release the friday **15th december 2020** 
+- First expected release the friday **15th december 2020** 
+- Second expected release the **10th january 2021** 
 
 
 ## :electric_plug: Dependencies
-1. Set your Virtual Environment:
+1. :desktop_computer: Set your Virtual Environment:
 
     ``` bash
     # Download venv librairy
     apt-get install python3-venv -y
     # Create your venv
-    py -m venv my_venv
+    python3 -m venv venv
     # Activate your venv
     . venv/bin/activate
     ```
     
     _For more information, go to [Python Virtual Environment Official Documentation](https://docs.python.org/3/library/venv.html)._
 
-1. Install the project dependencies:
+1. :package: Install the project dependencies:
 
     ``` bash
     apt install python3-pip
     pip install PTable
     pip install Flask
-    pip install extraction graphene flask-graphql requests
+   
+	pip install PyPDF2
     ```
 
+
 ## :zap: Quick start
+
+1. Database configuration:
+
+	``` bash
+		mkdir -p back/database/ && touch back/database/accounting.db
+		mkdir -p data/sg/ 
+ 		# create the input directory for file integration
+ ```
 
 1. To start the backend server, simply run bellow commands:
 
 	``` bash
-		$ export FLASK_APP=controller.py
-		$ export FLASK_ENV=development
-		$ flask run
-		 * Running on http://127.0.0.1:5000/
+		export FLASK_APP=controller.py
+		export FLASK_ENV=development
+		flask run
+		# * Running on http://127.0.0.1:5000/
 	```
+
+
+## :art: Architecture
+
+### Version 2
+![Accounting Architecture](img/accounting_diagram.png)
+
+<details>
+<summary>Version 1 (Click to expand)</summary>
+
+![Accounting Architecture](img/accounting_diagram_flat.png)
+ 
+</details>
+
 
 ## :clipboard: Tasks
 
@@ -84,23 +117,65 @@ First expected release the friday **15th december 2020**
 
 1. Statistics
 	- [x] Low level stats
-	  	- [x] Min, Max, Avg, opening, closing
-	  	- [x] Total, credit/debit, unit and amount
+	  - [x] Total credit/debit for quantity and amount
+	  - [x] Min, Max, Avg, opening, closing
 	- [x] Handle consumption periods (~daily, weekly, monthly)
+	  	- [ ] Add periodicity: Trimester, Semester
+	- [ ] Metrics column info
+		- [ ] Add header info line for metrics column
+		- [ ] Add footer avg line for metrics column
 	- [ ] Identify FIXED income and expenses (try to rely on LABELS)
 	- [ ] Define profile
 	- [ ] string similarity calculation to identify recurrent transactions 
 	  
-1. Labels
-	- [ ] Auto labeling on rules
-	- [ ] Endpoint for labeling
-	- [ ] Create categories and pattern that fall in this category
-		- [ ] Courses
-		- [ ] Amazon
-	- [ ] Can 2 categories share same payments ?
-		- [ ] Need exclusive categories for global expenses pie-chart
-		- [ ] and non-exclusive categories for relative expenses pie-chart
+1. Filter v2
+   - [ ] Allow labeling (Add, remove, reset)
+   - [ ] Auto labeling on token 
+	   - [ ] Available labels: transport, rent, salary, phone, AMZ, SG, Healthcare...
+   - [ ] Filter payments on account & list of labels 
+   - [ ] Ensure payments uniqueness
+   - [ ] Group some labels together (expose groups to client ?) 
+   - [ ] Filter payments on account & group
+   - [ ] Percentage of payments (qty & amount) labeled (or group) for a given period
+   - [ ] Pie chart for example
 	
+	<details>
+	<summary>Filter v1 (Click to expand)</summary>
+	
+	1. Labels
+		- [ ] Tag all payments 
+		- [ ] Define groups based on tags
+		- [ ] Create groups that matches perfectly one tag, multiple tags or other groups 
+		- [ ] Apply metrics on groups
+		- [ ] Allow enforced new tag for payment id
+	
+		- [ ] Count payments in groups
+		- [ ] Count payments untagged 
+		- [ ] Identify overlapping tags
+		  
+		- [ ] Auto labeling on rules
+		- [ ] Endpoint for labeling
+		- [ ] Create categories and pattern that fall in this category
+			- [ ] Courses
+			- [ ] Amazon
+		- [ ] Can 2 categories share same payments ?
+			- [ ] Need exclusive categories for global expenses pie-chart
+			- [ ] and non-exclusive 
+
+   </details>
+	
+1. Integrate PDFs
+   - [x] Download all PDFs available from banking platforms
+   - [ ] Read Parse (PyPDF2, tabula)
+   - [ ] Extract data ~> not very effective
+   - [ ] Store raw payments
+
+1. Architecture
+	- [ ] Design first diagram of internal services
+	  - [ ] Try coding schema
+	- [ ] Add the schema to README 
+	- [ ] Define API specification using Swagger
+   
 1. Front
 	- [ ] Consumption map on a calendar just like github contribution calendar
 	- [ ] Display payments curve

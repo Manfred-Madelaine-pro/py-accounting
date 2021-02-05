@@ -37,18 +37,9 @@ def get_account(id):
 
 
 def get_all_payments(account_id):
-    import database_payment as p_db
-
-    DB_NAME = "database/accounting.db"
-
-    con = p_db.db.get_connection(DB_NAME)
-    raw_payments = p_db.get_all_payments_by_account_id(con, account_id)
-
     import payment
 
-    payments = payment.map_to_domain(raw_payments)
-
-    return sorted(payments, key=lambda p: p.value_date, reverse=True)
+    return payment.get_payments_for(account_id)
 
 
 def test():

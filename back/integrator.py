@@ -10,13 +10,13 @@ class RawPayment:
     def __init__(
         self, source, file_name, account_id, value_date, amount, direction, title
     ):
+        self.title = title
         self.source = source
+        self.amount = amount
+        self.direction = direction
         self.file_name = file_name
         self.account_id = account_id
         self.value_date = value_date
-        self.amount = amount
-        self.direction = direction
-        self.title = title
 
     def __str__(self):
         return (
@@ -54,9 +54,9 @@ def save(files_raw_payments):
             rp_db.insert_payments_rows(con, rows)
 
     raw_payments = rp_db.select_all_raw_payments(con)
-    con.close()
 
     rp_db.db.print_table(raw_payments)
+    con.close()
 
 
 def already_integrated(con, f_name):

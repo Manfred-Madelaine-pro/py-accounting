@@ -1,8 +1,12 @@
 import json
 
+import database_payment as p_db
+
 
 CREDIT = "C"
 DEBIT = "D"
+
+DB_NAME = "database/accounting.db"
 
 
 class Payment:
@@ -29,42 +33,69 @@ class Payment:
     def to_json(self):
         return json.dumps(self.__dict__)
 
+    @staticmethod
+    def map(payment_dto):
+        return Payment(
+            payment_dto["id"],
+            payment_dto["account_id"],
+            payment_dto["value_date"],
+            payment_dto["amount"],
+            payment_dto["direction"],
+            payment_dto["title"],
+            payment_dto["creation_date"],
+        )
+
 
 # ------------------- Mapper -------------------
 
 
-def map_to_domain(payments):
-    return [to_domain(payment) for payment in payments]
+def payments_mapping(payments):
+    return [Payment.map(payment) for payment in payments]
 
 
-def to_domain(payment):
-    return Payment(
-        payment["id"],
-        payment["account_id"],
-        payment["value_date"],
-        payment["amount"],
-        payment["direction"],
-        payment["title"],
-        payment["creation_date"],
-    )
+# ----------------------- Get ---------------------------
+
+
+# TODO used ?
+def get_all_payments():
+    con = p_db.db.get_connection(DB_NAME)
+    raw_payments = p_db.select_all_payments(con)
+
+    payments = payments_mapping(raw_payments)
+    con.close()
+
+    return sorted(payments, key=lambda p: p.value_date, reverse=True)
+
+
+# ----------------------- Filter ---------------------------
+
+
+def get_payments_for(account_id):
+    con = p_db.db.get_connection(DB_NAME)
+    raw_payments = p_db.filter_all_payments_by_account_id(con, account_id)
+
+    payments = payments_mapping(raw_payments)
+    con.close()
+
+    return sorted(payments, key=lambda p: p.value_date, reverse=True)
+
+
+def get_all_payments_containing(tokens):
+    con = p_db.db.get_connection(DB_NAME)
+    raw_payments = p_db.filter_all_payments_by_tokens(con, tokens)
+
+    payments = payments_mapping(raw_payments)
+    con.close()
+
+    return sorted(payments, key=lambda p: p.value_date, reverse=True)
 
 
 # ------------------- Test -------------------
 
 
 def test():
-    import database as db
-
-    DB_NAME = "database/accounting.db"
-
-    con = db.get_connection(DB_NAME)
-    raw_payments = db.get_all_payments(con)
-
-    payments = map_to_domain(raw_payments)
-    sorted_payments = sorted(payments, key=lambda p: p.value_date, reverse=True)
-
-    # display all payments
-    [print(payment) for payment in sorted_payments]
+    payments = get_all_payments()
+    [print(payment) for payment in payments]
 
 
 if __name__ == "__main__":
